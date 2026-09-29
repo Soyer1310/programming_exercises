@@ -4,7 +4,7 @@ const createBankAccount = (initialBalance) => {
   return {
     deposit: amount => balance += amount,
     withdraw: amount => balance -= amount,
-    balance: () => balance,
+    getBalance: () => balance,
   }
 }
 // Examples of use
