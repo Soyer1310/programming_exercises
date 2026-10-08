@@ -1,10 +1,9 @@
 const getStats = (...numbers) => {
   let sum = 0;
-  let count = 0;
+  let count = numbers.length;
 
   for (let number of numbers) {
     sum += number;
-    count += 1;
   }
 
   return { 
