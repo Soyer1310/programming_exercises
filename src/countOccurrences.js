@@ -13,8 +13,10 @@ console.log(countOccurrences([5, 5, 5], 5));
 console.log(countOccurrences([1, 2, 3], 9));       
 console.log(countOccurrences([], 1));          
 
-countOccurrences([1, 2, 1, 3, 1], 1, 0);
-1 + countOccurrences([1, 2, 1, 3, 1], 1, 0);
+// countOccurrences([1, 2, 1, 3, 1], 1, 0);
+// 1 + countOccurrences([1, 2, 1, 3, 1], 1, 1);
+// 1 + countOccurrences([1, 2, 1, 3, 1], 1, 1);
+
 
 
 
