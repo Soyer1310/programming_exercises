@@ -18,7 +18,7 @@ const transactions = [
 const getTotalAmount = (transactions) => transactions
 .reduce((acc, transaction) => acc + transaction.amount, 0);
 
-const getTransactionsByType = (transactions, type) => transactions.filter(transaction.type === type);
+const getTransactionsByType = (transactions, type) => transactions.filter(transaction => transaction.type === type);
 
 const getTotalByType = (transactions, type) => {
   const transactionsByTipe = getTransactionsByType(transactions, type);
@@ -48,6 +48,9 @@ const getExpenseReport = (transactions) => {
   }
 };
 
-const analyzeExpenses = (expenses) => {
-
-};
+console.log(getTotalAmount(transactions));
+console.log(getTransactionsByType(transactions, 'expense'));
+console.log(getTotalByType(transactions, 'expense'));
+console.log(getTransactionsByCategory(transactions, 'Транспорт'));
+console.log(getAverageAmount(transactions));
+console.log(getExpenseReport(transactions));
