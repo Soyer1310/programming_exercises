@@ -48,9 +48,44 @@ const getExpenseReport = (transactions) => {
   }
 };
 
-console.log(getTotalAmount(transactions));
-console.log(getTransactionsByType(transactions, 'expense'));
-console.log(getTotalByType(transactions, 'expense'));
-console.log(getTransactionsByCategory(transactions, 'Транспорт'));
-console.log(getAverageAmount(transactions));
-console.log(getExpenseReport(transactions));
+const getExpensesByCategory = (transactions) => {
+  return transactions.reduce((acc, transaction) => {
+    if (Object.hasOwn(acc, transaction.category)) {
+      acc[transaction.category] += transaction.amount;
+    } else {
+      acc[transaction.category] = transaction.amount;
+    }
+    return acc;
+  }, {})
+};
+
+const createAmountFilter = (minAmount) => (transaction) => transaction.amount >= minAmount;
+
+const isLargeTransaction = createAmountFilter(2000);
+
+const filtredTransactions = transactions.filter(isLargeTransaction);
+
+const getLargeExpenseTitles = (transactions, minAmount) => {
+  const isLargeTransaction = createAmountFilter(minAmount);
+  return transactions
+    .filter(transaction => transaction.type === 'expense')
+    .filter(isLargeTransaction)
+    .map(transaction => transaction.title);
+};
+
+const formatExpenseReport = (report) => {
+  return Object.entries(report)
+      .reduce((acc, [name, value]) => `${acc}${name}: ${value}\n`, '').trim();
+};
+
+const printExpenseReport = (report) => {
+  console.log(report);
+}
+
+printExpenseReport(formatExpenseReport(getExpenseReport(transactions)));
+
+// Чистые функции: getTotalAmount, getTransactionsByType, getTotalByType, getTransactionsByCategory, getAverageAmount, getExpenseReport, getExpensesByCategory, createAmountFilter, getLargeExpenseTitles, formatExpenseReport;
+// выполняет побочные эффекты только printExpenseReport.
+// Ряд функций использует другие функции, например getTotalByType, getAverageAmount, getExpenseReport, getLargeExpenseTitles. Это увеличивает выразительность кода за счёт создания уровней абстракции и избавляет от дублирования.
+// В функции getAverageAmount я не стал выделять в отдельную функцию деление одного числа на другое, хотя возможно было создать абстракцию типа divide, также в getExpenseReport не создана отдельная абстракция для вычисления balance, так как вышеупомянутые абстракии скрыли бы и так максимально простые и очевидные операции, что никак не отразилось бы на выразительности и качестве кода
+// В getLargeExpenseTitles можно было бы выделить две абстракции для фильтрации транзакций типа expense и для получения title, но я решил уже этого не делать, так как поленился, хотя такие абстракции могли бы оказаться полезными для дальнейшего развития проекта, так как наверняка могли потребоваться в будующих вычислениях и новых функциях. Но я счёл это не критичным, так как код в getLargeExpenseTitles и так отлично читается и эти абстракции не сделали бы его намного более выразительным.
